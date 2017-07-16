@@ -1,5 +1,6 @@
-## Creating new Twitter login cfg
+# Creating new Twitter login cfg
 import os
+import help_functions
 
 
 def create():
@@ -10,10 +11,10 @@ def create():
         print("No loginfile has been created.\n")
 
 
-def test_new():  ## Ask if new Config should be created
+def test_new():  # Ask if new Config should be created
     while True:
         try:
-            answer = input("Create a new logingfile? (Y/N) ")
+            answer = input("Create a new loginfile? (Y/N) ")
             if answer is "Y":
                 del answer
                 x = 1
@@ -30,7 +31,7 @@ def test_new():  ## Ask if new Config should be created
     return x
 
 
-def test_exist():  ## Test if config already exist
+def test_exist():  # Test if config already exist
     directory = os.listdir()
     if "login.cfg" in directory:
         print("Loginfile already exists.")
@@ -54,7 +55,7 @@ def test_exist():  ## Test if config already exist
         pass
 
 
-def input_parameters():  ## Entering Tokens and Secrets
+def input_parameters():  # Entering Tokens and Secrets
     while True:
         try:
             consumer_key = input("Input your Consumer Key: ")
