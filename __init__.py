@@ -23,9 +23,17 @@ def tweet_man():  # Manual Input Tweets
     api.update_status(text)
 
 
+def tweet_semiman(text):
+    api.update_status(text)
+
+
 def direct_message_man():
     username = str(input("To User: "))
     message = str(input("Message: "))
+    api.send_direct_message(user=username, text=message)
+
+
+def direct_message_semiman(username, message)
     api.send_direct_message(user=username, text=message)
 
 
@@ -34,7 +42,7 @@ def my_follower():
     followers = []
     for i in users:
         followers.append(i.screen_name)
-    # print(followers)
+    return followers
 
 
 def timeline():
@@ -44,10 +52,17 @@ def timeline():
 
 
 def get_dms():
-    
-try:
-    timeline()
-except:
-    print("Error!\n")
+    msgs = api.direct_messages()
+    for i in msgs:
+        print(i.sender.screen_name + " wrote at " + str(i.created_at) + ": " + i.text + "\n ----------")
 
-exit()
+# try:
+#     follower = ""
+#     for i in my_follower():
+#         follower += str(i) + ", "
+#     text = ("My followers are " + follower)
+#     tweet_semiman(text)
+# except:
+#     print("Error!\n")
+
+# exit()
