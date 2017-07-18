@@ -3,12 +3,14 @@ import tweeting as t
 
 
 def __main__():
-    while True:
-        t.tweet_semiman(time.ctime() + ": This is a testrun.")
-        time.sleep(60)
+    t.expect_command()
+    time.sleep(60)
 
 
-try:
-    __main__()
-except:
-    print("__main__() is not starting.\n")
+while True:
+    try:
+        t.bot_on()
+        __main__()
+    except KeyboardInterrupt():
+        t.bot_off()
+
