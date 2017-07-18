@@ -13,7 +13,7 @@ def tweet_man():  # Manual Input Tweets
     api.update_status(text)
 
 
-def tweet_semiman(text):
+def tweet_semiman(text):  # expects string
     api.update_status(text)
 
 
@@ -23,8 +23,18 @@ def direct_message_man():
     api.send_direct_message(user=username, text=message)
 
 
-def direct_message_semiman(username, message):
+def direct_message_semiman(username, message):  # expects 2 strings
     api.send_direct_message(user=username, text=message)
+
+
+def tweet_picture_man():
+    text = str(input("Input tweet: "))
+    image = str(input("Input full path to image: "))
+    api.update_with_media(image, text)
+
+
+def tweet_picture_semiman(image, text):  # Expects path to file and string
+    api.update_with_media(image, text)
 
 
 def my_follower():
@@ -37,8 +47,11 @@ def my_follower():
 
 def timeline():
     public_tweets = api.home_timeline()
+    tweets = []
     for tweet in public_tweets:
-        print(tweet.user.name + ": " + tweet.text)
+        # print(tweet.user.name + ": " + tweet.text)
+        tweets.append([tweet.user.screen_name, tweet.text, tweet.id])
+    return tweets
 
 
 def get_dms():
@@ -47,11 +60,21 @@ def get_dms():
         print(i.sender.screen_name + " wrote at " + str(i.created_at) + ": " + i.text + "\n ----------")
 
 
-def tweet_picture_man():
-    text = str(input("Input tweet: "))
-    image = str(input("Input full path to image: "))
-    api.update_with_media(image, text)
+def retweet_follower():
+    names = my_follower()
+    tweets = timeline()
+    for i in tweets:
+        if i[0] in names:
+            api.retweet(i[2])
+        else:
+            pass
 
 
-def tweet_picture_semiman(image, text):
-    api.update_with_media(image, text)
+def retweet_by_filter(filter):  # expects list
+    tweets = timeline()
+    for i in tweets:
+        for j in filter:
+            if j in i[1]:
+                api.retweet(i[2])
+            else:
+                pass
