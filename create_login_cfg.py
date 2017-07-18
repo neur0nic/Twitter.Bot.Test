@@ -1,6 +1,5 @@
 # Creating new Twitter login cfg
 import os
-import help_functions
 
 
 def create():
@@ -32,7 +31,7 @@ def test_new():  # Ask if new Config should be created
 
 
 def test_exist():  # Test if config already exist
-    directory = os.listdir()
+    directory = os.listdir("./")
     if "login.cfg" in directory:
         print("Loginfile already exists.")
         while True:
