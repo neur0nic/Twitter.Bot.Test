@@ -33,7 +33,7 @@ def direct_message_man():
     api.send_direct_message(user=username, text=message)
 
 
-def direct_message_semiman(username, message)
+def direct_message_semiman(username, message):
     api.send_direct_message(user=username, text=message)
 
 
@@ -55,6 +55,20 @@ def get_dms():
     msgs = api.direct_messages()
     for i in msgs:
         print(i.sender.screen_name + " wrote at " + str(i.created_at) + ": " + i.text + "\n ----------")
+
+
+def tweet_picture_man():
+    text = str(input("Input tweet: "))
+    image = str(input("Input full path to image: "))
+    api.update_with_media(image, text)
+
+
+def tweet_picture_semiman(image, text):
+    api.update_with_media(image, text)
+
+
+def stream_listener():
+    pass
 
 # try:
 #     follower = ""
