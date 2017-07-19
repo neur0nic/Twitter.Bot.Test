@@ -112,13 +112,13 @@ def expect_command():
 
 def exec_command(tweet):  # Expects single tweet (list)
     commands = ["tell me a joke", "tell me the time", "tell me the discordian date"]
-    if commands[0] in tweet[1]:
+    if commands[0].lower() in tweet[1].lower():
         tell_joke(tweet)
         mark_tweet_done(tweet)
-    elif commands[1] in tweet[1]:
+    elif commands[1].lower() in tweet[1].lower():
         tell_time(tweet)
         mark_tweet_done(tweet)
-    elif commands[2] in tweet[1]:
+    elif commands[2].lower() in tweet[1].lower():
         discordian_date(tweet)
         mark_tweet_done(tweet)
     else:
