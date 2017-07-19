@@ -6,6 +6,7 @@ import time
 import pickle
 from ddate.base import DDate
 from itertools import cycle
+import urllib.request
 
 
 keys = readconf()
@@ -112,7 +113,8 @@ def expect_command():
 
 
 def exec_command(tweet):  # Expects single tweet (list)
-    commands = ["tell me a joke", "tell me the time", "tell me the discordian date", "play russian roulette"]
+    commands = ["tell me a joke", "tell me the time", "tell me the discordian date", "play russian roulette",
+                "tell my fortune"]
     if commands[0].lower() in tweet[1].lower():
         tell_joke(tweet)
         mark_tweet_done(tweet)
@@ -124,6 +126,9 @@ def exec_command(tweet):  # Expects single tweet (list)
         mark_tweet_done(tweet)
     elif commands[3].lower() in tweet[1].lower():
         russian_roulette(tweet)
+        mark_tweet_done(tweet)
+    elif commands[4].lower() in tweet[1].lower():
+        fortunecoockie(tweet)
         mark_tweet_done(tweet)
     else:
         pass
@@ -208,3 +213,21 @@ def russian_roulette(tweet):  # Expects single tweet (list)
     elif len(text) >= 140:
         reply_semiman((text0 + "..."), tweet[2])
         reply_semiman(("@" + tweet[0] + "... " + text1), tweet[2])
+
+
+def fortunecoockie(tweet):  # Expects single tweet (list)
+    while True:
+        f = urllib.request.urlopen("http://www.dein-glueckskeks.de/glueckskeks-spruch.php")
+        fortune = f.read()
+
+        fortune = fortune.decode("ISO-8859-1")
+        f.close()
+
+        start = fortune.find("<b>")
+        end = fortune.find("</b>")
+        text = ("@" + tweet[0] + " " + fortune[(start + 3):end])
+        if len(text) < 140:
+            break
+        else:
+            pass
+    reply_semiman(text, tweet[2])
