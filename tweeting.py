@@ -114,7 +114,7 @@ def expect_command():
 
 def exec_command(tweet):  # Expects single tweet (list)
     commands = ["tell me a joke", "tell me the time", "tell me the discordian date", "play russian roulette",
-                "tell my fortune", "My name is Gybrush Threepwood. Prepair to die"]
+                "tell my fortune", "My name is Guybrush Threepwood. Prepair to die"]
     if commands[0].lower() in tweet[1].lower():
         tell_joke(tweet)
         mark_tweet_done(tweet)
