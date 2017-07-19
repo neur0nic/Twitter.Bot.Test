@@ -11,3 +11,4 @@ You can ask him questions. So far he answers to these questions:
 3) "Tell me the discordian date" - Replies the current discordian date
 4) "Play russian roullette" - Plays Roussian Roullette till someone dies
 5) "Tell my fortune" - Replies with a fortune cookie text from <a>dein-glueckskeks.de</a>
+6) "My name is Gybrush Threepwood. Prepair to die" - Replies with an insult

@@ -114,7 +114,7 @@ def expect_command():
 
 def exec_command(tweet):  # Expects single tweet (list)
     commands = ["tell me a joke", "tell me the time", "tell me the discordian date", "play russian roulette",
-                "tell my fortune"]
+                "tell my fortune", "My name is Gybrush Threepwood. Prepair to die"]
     if commands[0].lower() in tweet[1].lower():
         tell_joke(tweet)
         mark_tweet_done(tweet)
@@ -129,6 +129,9 @@ def exec_command(tweet):  # Expects single tweet (list)
         mark_tweet_done(tweet)
     elif commands[4].lower() in tweet[1].lower():
         fortunecoockie(tweet)
+        mark_tweet_done(tweet)
+    elif commands[5].lower() in tweet[1].lower():
+        insult(tweet)
         mark_tweet_done(tweet)
     else:
         pass
@@ -231,3 +234,11 @@ def fortunecoockie(tweet):  # Expects single tweet (list)
         else:
             pass
     reply_semiman(text, tweet[2])
+
+
+def insult(tweet):  # Expects single tweet (list)
+    with open("insults.list", "rb") as f:
+        insults = pickle.load(f)
+    text = ("@" + tweet[0] + " " + choice(insults))
+    reply_semiman(text, tweet[2])
+    # print(text)
