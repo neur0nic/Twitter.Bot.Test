@@ -1,10 +1,11 @@
 # My Twitter routines
 from authenticating import readconf
 import tweepy
-from random import randint
+from random import randint, choice
 import time
 import pickle
 from ddate.base import DDate
+from itertools import cycle
 
 
 keys = readconf()
@@ -111,7 +112,7 @@ def expect_command():
 
 
 def exec_command(tweet):  # Expects single tweet (list)
-    commands = ["tell me a joke", "tell me the time", "tell me the discordian date"]
+    commands = ["tell me a joke", "tell me the time", "tell me the discordian date", "play russian roulette"]
     if commands[0].lower() in tweet[1].lower():
         tell_joke(tweet)
         mark_tweet_done(tweet)
@@ -120,6 +121,9 @@ def exec_command(tweet):  # Expects single tweet (list)
         mark_tweet_done(tweet)
     elif commands[2].lower() in tweet[1].lower():
         discordian_date(tweet)
+        mark_tweet_done(tweet)
+    elif commands[3].lower() in tweet[1].lower():
+        russian_roulette(tweet)
         mark_tweet_done(tweet)
     else:
         pass
@@ -171,7 +175,36 @@ def tell_time(tweet):  # Expects single tweet (list)
     reply_semiman(text, tweet[2])
 
 
-def discordian_date(tweet):
+def discordian_date(tweet):  # Expects single tweet (list)
     text = str("@" + tweet[0] + " " + str(DDate()))
     # print(text)
     reply_semiman(text, tweet[2])
+
+
+def russian_roulette(tweet):  # Expects single tweet (list)
+    alive = True
+    chamber = [0, 1, 2, 3, 4, 5]
+    loaded = choice(chamber)
+    player = [tweet[0], "der_tony_stark"]
+    change = cycle((0, 1))
+    i = next(change)
+    text = ("@" + player[i] + " You starts. ")
+    text0, text1 = "", ""
+    while alive:
+        shot = choice(chamber)
+        if shot == loaded:
+            text += ("Drehen... BANG! @" + player[i] + " is dead! ")
+            alive = False
+        else:
+            i = next(change)
+            text += ("Drehen... Abrücken... @" + player[i] + " ist dran. ")
+            chamber.remove(shot)
+        if len(text) < 140:
+            text0 = text
+        else:
+            text1 = text[(len(text0)):]
+    if len(text) < 140:
+        reply_semiman(text, tweet[2])
+    elif len(text) >= 140:
+        reply_semiman((text0 + "..."), tweet[2])
+        reply_semiman(("@" + tweet[0] + "... " + text1), tweet[2])

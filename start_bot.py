@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
 import time  # , sys
 import tweeting as t
 from threading import Thread

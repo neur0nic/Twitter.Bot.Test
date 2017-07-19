@@ -1,9 +1,10 @@
 # Creating new Twitter login cfg
 import os
+# import pickle
 
 
 def create():
-    if test_new() is 1:
+    if test_new():
         test_exist()
         input_parameters()
     else:
@@ -16,11 +17,11 @@ def test_new():  # Ask if new Config should be created
             answer = input("Create a new loginfile? (Y/N) ")
             if answer is "Y":
                 del answer
-                x = 1
+                x = True
                 break
             elif answer is "N":
                 del answer
-                x = 0
+                x = False
                 break
             else:
                 del answer
@@ -72,3 +73,14 @@ def input_parameters():  # Entering Tokens and Secrets
     fw.write("access_token_secret = " + access_secret + "\n")
     fw.close()
     print("Configuration complete!\n")
+
+#
+# def first_start():
+#     try:
+#         os.listdir("~/.Moehp/")
+#     except:
+#         os.mkdir("~/.Moehp/")
+#         emptylist = []
+#         with open("~/.Moehp/answered.list", "wb") as f:
+#             pickle.dump(emptylist, f)
+#         os.system("touch ~/.Moehp/login.cfg")
