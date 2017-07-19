@@ -3,6 +3,9 @@ from authenticating import readconf
 import tweepy
 from random import randint
 import time
+import pickle
+from ddate.base import DDate
+
 
 keys = readconf()
 auth = tweepy.OAuthHandler(keys[0], keys[1])
@@ -88,10 +91,10 @@ def retweet_follower():
             pass
 
 
-def retweet_by_filter(filter):  # expects list
+def retweet_by_filter(filterword):  # expects list
     tweets = timeline()
     for i in tweets:
-        for j in filter:
+        for j in filterword:
             if j in i[1]:
                 api.retweet(i[2])
             else:
@@ -108,27 +111,26 @@ def expect_command():
 
 
 def exec_command(tweet):  # Expects single tweet (list)
-    commands = ["tell me a joke", "tell me the time"]
-    if commands[0] in tweet[2]:
+    commands = ["tell me a joke", "tell me the time", "tell me the discordian date"]
+    if commands[0] in tweet[1]:
         tell_joke(tweet)
         mark_tweet_done(tweet)
-    elif commands[1] in tweet[2]:
+    elif commands[1] in tweet[1]:
         tell_time(tweet)
         mark_tweet_done(tweet)
-    # elif commands[2] in i[2]:
+    elif commands[2] in tweet[1]:
+        discordian_date(tweet)
+        mark_tweet_done(tweet)
     else:
         pass
 
 
 def check_if_done(tweet):  # Expects single tweet (list)
-    f = open("answered.txt", "r")
-    answeredtweets = f.readlines()
-    f.close()
+    with open("answered.list", "rb") as f:
+        answeredtweets = pickle.load(f)
     if len(answeredtweets) > 50:
         for i in range(0, 25):
             del answeredtweets[0]
-    for i in range(0, len(answeredtweets)):
-        answeredtweets[i] = answeredtweets[i].replace("\n", "")
     switch = False
     for i in answeredtweets:
         if tweet[2] == i:
@@ -141,31 +143,35 @@ def check_if_done(tweet):  # Expects single tweet (list)
 
 
 def mark_tweet_done(tweet):  # Expects single tweet (list)
-    f = open("answered.txt", "r")
-    answeredtweets = f.readlines()
-    f.close()
+    with open("answered.list", "rb") as fr:
+        answeredtweets = pickle.load(fr)
     answeredtweets.append(tweet[2])
-    f = open("answered.txt", "w")
-    for x in answeredtweets:
-        f.write(x + "\n")
-    f.close()
+    with open("answered.list", "wb") as fw:
+        pickle.dump(answeredtweets, fw)
 
 
-def tell_joke(tweet):    # Expects single tweet (list)
+def tell_joke(tweet):  # Expects single tweet (list)
     # Quelle http://www.dailymail.co.uk/news/article-1322475/Researchers-official-50-funniest-jokes-time.html
     f = open("twitterjokes.txt", "r")
     jokes = f.readlines()
     f.close()
     while True:
-        joke = str("@" + tweet[0] + " " + jokes[randint(0, 37)])
+        joke = str("@" + tweet[0] + " " + jokes[randint(0, 36)])
         if len(joke) <= 140:
+            # print(joke)
             reply_semiman(joke, tweet[2])
             break
         else:
             pass
 
 
-def tell_time(tweet):    # Expects single tweet (list)
+def tell_time(tweet):  # Expects single tweet (list)
     text = str("@" + tweet[0] + " The current time is " + time.ctime()[-13:-5])
+    # print(text)
     reply_semiman(text, tweet[2])
 
+
+def discordian_date(tweet):
+    text = str("@" + tweet[0] + " " + str(DDate()))
+    # print(text)
+    reply_semiman(text, tweet[2])
