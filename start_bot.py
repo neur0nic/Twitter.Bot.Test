@@ -3,11 +3,13 @@
 
 import time  # , sys
 from os import system
-import tweeting as t
+import tweeting
 from threading import Thread
+from create_login_cfg import first_start
 
 
 def main():
+    t = tweeting.TweetClass()
     t.bot_on()
     print("Bot has started. Ready to tweet! ")
     list = []
@@ -33,4 +35,6 @@ def stopp(list):
 
 
 if __name__ == '__main__':
+    first_start()
     main()
+

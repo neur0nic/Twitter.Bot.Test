@@ -1,11 +1,14 @@
 from create_login_cfg import create  # , first_start
+from os import path
 
 
 def readconf():
+    home = path.expanduser("~")
     while True:
         try:
             # int("hallo")
-            f = open("login.cfg", "r")
+            config = home + "/.moehp/login.cfg"
+            f = open(config, "r")
             consumer_key = f.readline().split(" ")[-1].replace("\n", "")
             consumer_secret = f.readline().split(" ")[-1].replace("\n", "")
             access_token = f.readline().split(" ")[-1].replace("\n", "")
