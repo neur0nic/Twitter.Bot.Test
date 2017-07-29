@@ -87,10 +87,13 @@ def retweet_follower():
     names = my_follower()
     tweets = timeline()
     for i in tweets:
-        if i[0] in names:
-            api.retweet(i[2])
-        else:
+        if check_if_done(i):
             pass
+        elif not check_if_done(i):
+            if i[0] in names:
+                api.retweet(i[2])
+            else:
+                pass
 
 
 def retweet_by_filter(filterword):  # expects list
@@ -108,7 +111,7 @@ def expect_command():
     for i in tweets:
         if check_if_done(i):
             pass
-        if not check_if_done(i):
+        elif not check_if_done(i):
             exec_command(i)
 
 

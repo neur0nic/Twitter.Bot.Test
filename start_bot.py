@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import time  # , sys
+from os import system
 import tweeting as t
 from threading import Thread
 
@@ -16,12 +17,14 @@ def main():
     while not list:
         try:
             t.expect_command()
+            t.retweet_follower()
             time.sleep(60)
             # print("jupp")
         except:
             pass
     t.bot_off()
     print("Bot has been stopped. Good bye! ")
+    system("exit")
 
 
 def stopp(list):
