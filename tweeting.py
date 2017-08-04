@@ -10,7 +10,7 @@ from itertools import cycle
 import urllib.request
 
 
-class TweetClass():
+class TweetClass:
 
     def __init__(self):
         keys = readconf()
@@ -128,7 +128,7 @@ class TweetClass():
             pass
 
     def check_if_done(self, tweet):  # Expects single tweet (list)
-        wdir = path.expanduser("~") + "./moehp/"
+        wdir = path.expanduser("~") + "/.moehp/"
         file = wdir + "answered.list"
         with open(file, "rb") as f:
             answeredtweets = pickle.load(f)
@@ -146,7 +146,7 @@ class TweetClass():
         return switch
 
     def mark_tweet_done(self, tweet):  # Expects single tweet (list)
-        wdir = path.expanduser("~") + "./moehp/"
+        wdir = path.expanduser("~") + "/.moehp/"
         file = wdir + "answered.list"
         with open(file, "rb") as fr:
             answeredtweets = pickle.load(fr)
@@ -156,7 +156,7 @@ class TweetClass():
 
     def tell_joke(self, tweet):  # Expects single tweet (list)
         # Quelle http://www.dailymail.co.uk/news/article-1322475/Researchers-official-50-funniest-jokes-time.html
-        wdir = path.expanduser("~") + "./moehp/"
+        wdir = path.expanduser("~") + "/.moehp/"
         file = wdir + "twitterjokes.txt"
         with open(file, "r") as f:
             jokes = f.readlines()

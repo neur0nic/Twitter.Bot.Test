@@ -17,6 +17,7 @@ def main():
     abort.start()
     print("Hit 'Return' to stop the bot. ")
     while not list:
+    # while True:
         try:
             t.expect_command()
             t.retweet_follower()
